@@ -5,15 +5,15 @@
 ## ![](https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/23px-Flag_of_the_United_Kingdom.svg.png) Getting the Library
 
 You can [download it as an archive](https://github.com/Vasiliy-Makogon/Database/archive/master.zip), clone from this
-site, or download via composer ([link to packagist.org](https://packagist.org/packages/krugozor/database)):
+site, or download via composer ([link to packagist.org](https://packagist.org/packages/busenov/database)):
 ```
-composer require krugozor/database
+composer require busenov/database
 ```
 
 
-## What is `krugozor/database`?
+## What is `busenov/database`?
 
-`krugozor/database` is a PHP 8.0 class library for simple, convenient, fast and secure work with the MySql database, using
+`busenov/database` is a PHP 8.0 class library for simple, convenient, fast and secure work with the MySql database, using
 the PHP extension [mysqli](https://www.php.net/en/mysqli).
 
 
@@ -42,7 +42,7 @@ The main disadvantages of all libraries for working with the mysql database in P
       It remains either to pervert, or to climb into the database log.
 
 
-### Solution: `krugozor/database` is a class for working with MySql
+### Solution: `busenov/database` is a class for working with MySql
 
 1. Eliminates verbosity - instead of 3 or more lines of code to execute one request when using the "native" library, you write only one.
 2. Screens all parameters that go to the request body, according to the specified type of placeholders - reliable protection against SQL injections.
@@ -50,13 +50,13 @@ The main disadvantages of all libraries for working with the mysql database in P
 4. Expandable. In fact, the library provides only a parser and the execution of a SQL query with guaranteed protection against SQL injections. You can inherit from any library class and use both the library mechanisms and the `mysqli` and `mysqli_result` mechanisms to create the methods you need to work with.
 
 
-### What is NOT the `krugozor/database` library?
+### What is NOT the `busenov/database` library?
 
 Most wrappers for various database drivers are a bunch of useless code with a disgusting
 architecture. Their authors, not understanding the practical purpose of their wrappers themselves, turn them into a kind of builders
 queries (sql builder), ActiveRecord libraries and other ORM solutions.
 
-The `krugozor/database` library is none of the above. This is just a convenient tool for working with regular SQL within the framework
+The `busenov/database` library is none of the above. This is just a convenient tool for working with regular SQL within the framework
 MySQL DBMS - and no more!
 
 
@@ -71,9 +71,9 @@ a method that executes a SQL query:
 // Let's assume you installed the library via composer
 require  './vendor/autoload.php';
 
-use Krugozor\Database\Mysql;
+use busenov\Database\Mysql;
 
-// Connecting to a DBMS and getting a "wrapper" object over mysqli - \Krugozor\Database\Mysql
+// Connecting to a DBMS and getting a "wrapper" object over mysqli - \busenov\Database\Mysql
 $db = Mysql::create("localhost", "root", "password")
       // Error output language - English
       ->setErrorMessagesLang('en')
@@ -84,8 +84,8 @@ $db = Mysql::create("localhost", "root", "password")
       // Enable storage of all SQL queries for reporting/debugging/statistics
       ->setStoreQueries(true);
 
-// Getting a result object \Krugozor\Database\Statement
-// \Krugozor\Database\Statement - "wrapper" over an object mysqli_result
+// Getting a result object \busenov\Database\Statement
+// \busenov\Database\Statement - "wrapper" over an object mysqli_result
 $result = $db->query("SELECT * FROM `users` WHERE `name` = '?s' AND `age` = ?i", "d'Artagnan", 41);
 
 // We receive data (in the form of an associative array, for example)
@@ -110,12 +110,12 @@ $value = mysqli_real_escape_string($mysql, $_POST['value']);
 $result = mysqli_query($mysql, "SELECT * FROM `t` WHERE `f1` = '$value' AND `f2` = $id");
 ```
 
-Now it has become easy to write queries, quickly, and most importantly, the `krugozor/database` library completely prevents any possible
+Now it has become easy to write queries, quickly, and most importantly, the `busenov/database` library completely prevents any possible
 SQL injections.
 
 ### Introduction to placeholder system
 
-The types of placeholders and their purpose are described below. Before getting acquainted with placeholder types, it is necessary to understand how the mechanism of the `krugozor/database` library works. Example:
+The types of placeholders and their purpose are described below. Before getting acquainted with placeholder types, it is necessary to understand how the mechanism of the `busenov/database` library works. Example:
 
 ```php
  $db->query("SELECT ?i", 123); 
@@ -176,7 +176,7 @@ $db->query('SELECT ?i', 55.5);
 
 **ATTENTION!** The following explanation of the library will go on assuming that the `Mysql::MODE_TRANSFORM` mode is activated.
 
-### What types of placeholders are provided in the `krugozor/database` library?
+### What types of placeholders are provided in the `busenov/database` library?
 
 
 #### `?i` — integer placeholder

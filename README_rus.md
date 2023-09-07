@@ -1,14 +1,14 @@
 ## Получение библиотеки
 
-Вы можете [скачать её архивом](https://github.com/Vasiliy-Makogon/Database/archive/master.zip), клонировать с данного сайта или загрузить через composer ([ссылка на packagist.org](https://packagist.org/packages/krugozor/database)):
+Вы можете [скачать её архивом](https://github.com/Vasiliy-Makogon/Database/archive/master.zip), клонировать с данного сайта или загрузить через composer ([ссылка на packagist.org](https://packagist.org/packages/busenov/database)):
 ```
-composer require krugozor/database
+composer require busenov/database
 ```
 
 
-## Что такое `krugozor/database`?
+## Что такое `busenov/database`?
 
-`krugozor/database` — библиотека классов на PHP 8.0 для простой, удобной, быстрой и безопасной работы с базой данных MySql, использующая расширение PHP [mysqli](https://www.php.net/manual/ru/book.mysqli.php).
+`busenov/database` — библиотека классов на PHP 8.0 для простой, удобной, быстрой и безопасной работы с базой данных MySql, использующая расширение PHP [mysqli](https://www.php.net/manual/ru/book.mysqli.php).
 
 
 ### Зачем нужен самописный класс для MySql, если в PHP есть абстракция PDO и расширение mysqli?
@@ -30,18 +30,18 @@ composer require krugozor/database
 Если разработчик использует PDO, с подготавливаемыми запросами, то это сделать... НЕВОЗМОЖНО! Никаких максимально удобных механизмов для этого в родных библиотеках [НЕ ПРЕДУСМОТРЕНО](https://qna.habr.com/q/22669). Остается либо извращаться, либо лезть в лог базы данных.
 
 
-### Решение: `krugozor/database` — класс для работы c MySql
+### Решение: `busenov/database` — класс для работы c MySql
 
 1. Избавляет от многословности — вместо 3 и более строк кода для исполнения одного запроса при использовании "родной" библиотеки, вы пишите всего одну.
 2. Экранирует все параметры, идущие в тело запроса, согласно указанному типу заполнителей — надежная защита от SQL-инъекций.
 3. Не замещает функциональность "родного" mysqli адаптера, а просто дополняет его.
 4. Расширяема. По сути, библиотка предоставляет собой лишь парсер и исполнение SQL-запроса с гарантированной защитой от SQL-инъекций. Вы можете унаследоваться от любого класса библиотеки и используя как механизмы библиотеки, так и механизмы `mysqli` и `mysqli_result` создавать необходмые вам методы для работы.
 
-### Чем НЕ является библиотека `krugozor/database`?
+### Чем НЕ является библиотека `busenov/database`?
 
 Большинство оберток под различные драйверы баз данных являются нагромождением бесполезного кода с отвратительной архитектурой. Их авторы, сами не понимая практической цели своих оберток, превращают их в подобие построителей запросов (sql builder), ActiveRecord библиотек и прочих ORM-решений.
 
-Библиотека `krugozor/database` не является ничем из перечисленных. Это лишь удобный инструмент для работы с обычным SQL в рамках СУБД MySQL — и не более!
+Библиотека `busenov/database` не является ничем из перечисленных. Это лишь удобный инструмент для работы с обычным SQL в рамках СУБД MySQL — и не более!
 
 
 ## Что такое placeholders (заполнители)?
@@ -53,9 +53,9 @@ composer require krugozor/database
 // Предположим, что установили библиотеку через composer 
 require  './vendor/autoload.php';
 
-use Krugozor\Database\Mysql;
+use busenov\Database\Mysql;
 
-// Соединение с СУБД и получение объекта-"обертки" над mysqli - \Krugozor\Database\Mysql
+// Соединение с СУБД и получение объекта-"обертки" над mysqli - \busenov\Database\Mysql
 $db = Mysql::create("localhost", "root", "password")
       // Язык вывода ошибок - русский
       ->setErrorMessagesLang('ru')
@@ -66,8 +66,8 @@ $db = Mysql::create("localhost", "root", "password")
       // Включим хранение всех SQL-запросов для отчета/отладки/статистики
       ->setStoreQueries(true);
 
-// Получение объекта результата \Krugozor\Database\Statement
-// \Krugozor\Database\Statement - "обертка" над объектом mysqli_result
+// Получение объекта результата \busenov\Database\Statement
+// \busenov\Database\Statement - "обертка" над объектом mysqli_result
 $result = $db->query("SELECT * FROM `users` WHERE `name` = '?s' AND `age` = ?i", "Д'Артаньян", 41);
 
 // Получаем данные (в виде ассоциативного массива, например)
@@ -90,12 +90,12 @@ $value = mysqli_real_escape_string($mysql, $_POST['value']);
 $result = mysqli_query($mysql, "SELECT * FROM `t` WHERE `f1` = '$value' AND `f2` = $id");
 ```
 
-Теперь запросы стало писать легко, быстро, а главное библиотека `krugozor/database` полностью предотвращает любые возможные SQL-инъекции.
+Теперь запросы стало писать легко, быстро, а главное библиотека `busenov/database` полностью предотвращает любые возможные SQL-инъекции.
 
 
 ### Введение в систему заполнителей
 
-Типы заполнителей и их предназначение описываются ниже. Прежде чем знакомиться с типами заполнителей, необходимо понять как работает механизм библиотеки `krugozor/database`. Пример:
+Типы заполнителей и их предназначение описываются ниже. Прежде чем знакомиться с типами заполнителей, необходимо понять как работает механизм библиотеки `busenov/database`. Пример:
 
 ```php
  $db->query("SELECT ?i", 123); 
