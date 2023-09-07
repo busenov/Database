@@ -1,5 +1,5 @@
 {
-  "name": "krugozor/database",
+  "name": "busenov/database",
   "description": "PHP class library for simple, convenient, fast and safe work with MySql database, using PHP mysqli extension and imitation of prepared queries.",
   "type": "library",
   "homepage": "https://github.com/Vasiliy-Makogon/Database",
@@ -16,7 +16,7 @@
     "mysql database php class"
   ],
   "require": {
-    "php": ">=8.0",
+    "php": ">=7.2",
     "ext-mysqli": "*",
     "ext-mbstring": "*"
   },
@@ -28,7 +28,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "Krugozor\\Database\\": "src/"
+      "Busenov\\Database\\": "src/"
     }
   }
 }

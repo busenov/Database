@@ -1,6 +1,6 @@
 <?php
 
-namespace Krugozor\Database;
+namespace Busenov\Database;
 
 /**
  * @author Vasiliy Makogon, makogon-vs@yandex.ru

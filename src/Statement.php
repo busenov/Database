@@ -1,20 +1,24 @@
 <?php
 
-namespace Krugozor\Database;
+namespace Busenov\Database;
 
 /**
  * @author Vasiliy Makogon, makogon-vs@yandex.ru
  * @link https://github.com/Vasiliy-Makogon/Database/
+ *
+ * Обёртка над объектом \mysqli_result.
  */
 class Statement
 {
     /**
+     * Рузультат SQL-операции в виде объекта \mysqli_result.
+     *
      * @var \mysqli_result
      */
-    protected \mysqli_result $mysqli_result;
+    private $mysqli_result;
 
     /**
-     * @param \mysqli_result
+     * @param mysqli_result
      */
     public function __construct(\mysqli_result $mysqli_result)
     {
@@ -24,31 +28,35 @@ class Statement
     /**
      * Извлекает результирующий ряд в виде ассоциативного массива.
      *
-     * @return array|null
+     * @see mysqli_fetch_assoc
+     * @return array
      */
-    public function fetchAssoc(): ?array
+
+    public function fetchAssoc()
     {
-        return $this->mysqli_result->fetch_assoc();
+        return mysqli_fetch_assoc($this->mysqli_result);
     }
 
     /**
      * Извлекает результирующий ряд в виде массива.
      *
-     * @return array|null
+     * @see mysqli_fetch_row
+     * @return array
      */
-    public function fetchRow(): ?array
+    public function fetchRow()
     {
-        return $this->mysqli_result->fetch_row();
+        return mysqli_fetch_row($this->mysqli_result);
     }
 
     /**
      * Извлекает результирующий ряд в виде объекта.
      *
-     * @return \stdClass|null
+     * @see mysqli_fetch_object
+     * @return \stdClass
      */
-    public function fetchObject(): ?\stdClass
+    public function fetchObject()
     {
-        return $this->mysqli_result->fetch_object();
+        return mysqli_fetch_object($this->mysqli_result);
     }
 
     /**
@@ -56,11 +64,11 @@ class Statement
      *
      * @return array
      */
-    public function fetchAssocArray(): array
+    public function fetchAssocArray()
     {
         $array = array();
 
-        while ($row = $this->mysqli_result->fetch_assoc()) {
+        while ($row = mysqli_fetch_assoc($this->mysqli_result)) {
             $array[] = $row;
         }
 
@@ -72,11 +80,11 @@ class Statement
      *
      * @return array
      */
-    public function fetchRowArray(): array
+    public function fetchRowArray()
     {
         $array = array();
 
-        while ($row = $this->mysqli_result->fetch_row()) {
+        while ($row = mysqli_fetch_row($this->mysqli_result)) {
             $array[] = $row;
         }
 
@@ -88,11 +96,11 @@ class Statement
      *
      * @return array
      */
-    public function fetchObjectArray(): array
+    public function fetchObjectArray()
     {
         $array = array();
 
-        while ($row = $this->mysqli_result->fetch_object()) {
+        while ($row = mysqli_fetch_object($this->mysqli_result)) {
             $array[] = $row;
         }
 
@@ -102,11 +110,11 @@ class Statement
     /**
      * Возвращает значение первого поля результирующей таблицы.
      *
-     * @return string|null
+     * @return string
      */
-    public function getOne(): ?string
+    public function getOne()
     {
-        if ($row = $this->mysqli_result->fetch_row()) {
+        if ($row = mysqli_fetch_row($this->mysqli_result)) {
             return $row[0];
         }
 
@@ -120,17 +128,17 @@ class Statement
      * @see mysqli_num_rows
      * @return int
      */
-    public function getNumRows(): int
+    public function getNumRows()
     {
-        return $this->mysqli_result->num_rows;
+        return mysqli_num_rows($this->mysqli_result);
     }
 
     /**
-     * Возвращает объект результата \mysqli_result.
+     * Возвращает объект результата mysqli_result.
      *
      * @return \mysqli_result
      */
-    public function getResult(): \mysqli_result
+    public function getResult()
     {
         return $this->mysqli_result;
     }
